@@ -4,7 +4,7 @@ use 5.008;
 use Mouse;
 use Async::Hooks::Ctl;
 
-our $VERSION = '0.01';
+our $VERSION = '0.03';
 
 has registry => (
   isa => 'HashRef',
@@ -39,7 +39,7 @@ sub call {
   my $r = $self->{registry};
   my $cbs = exists $r->{$hook}? $r->{$hook} : [];
   
-  return Async::Hooks::Ctl->new($cbs, $args, $cleanup)->next;
+  return Async::Hooks::Ctl->new([@$cbs], $args, $cleanup)->next;
 }
 
 
