@@ -4,7 +4,7 @@ use 5.008;
 use Mouse;
 use Async::Hooks::Ctl;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 has registry => (
   isa => 'HashRef',
@@ -24,6 +24,17 @@ sub hook {
   push @$cbs, $cb;
   
   return;
+}
+
+
+sub has_hooks_for {
+  my ($self, $hook) = @_;
+  
+  confess("Missing first parameter, the hook name, ") unless $hook;
+  
+  my $reg = $self->{registry};
+  return 0 unless exists $reg->{$hook};
+  return scalar(@{$reg->{$hook}});
 }
 
 
@@ -234,6 +245,10 @@ with arguments that each callback will receive.
 
 The optional cleanup callback will be called at the end of the chain, or
 when a callback calls C<< $ctl->done() >>.
+
+=item $count = $registry->has_hooks_for($hook);
+
+Returns the number of callbacks registered with C<$hook>.
 
 =back
 
