@@ -1,6 +1,6 @@
 package Async::Hooks::Ctl;
 {
-  $Async::Hooks::Ctl::VERSION = '0.06';
+  $Async::Hooks::Ctl::VERSION = '0.15';
 }
 
 # ABSTRACT: Hook control object
@@ -64,7 +64,7 @@ Async::Hooks::Ctl - Hook control object
 
 =head1 VERSION
 
-version 0.06
+version 0.15
 
 =head1 SYNOPSIS
 

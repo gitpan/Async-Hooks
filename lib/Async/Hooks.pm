@@ -1,6 +1,6 @@
 package Async::Hooks;
 {
-  $Async::Hooks::VERSION = '0.06';
+  $Async::Hooks::VERSION = '0.15';
 }
 
 # ABSTRACT: Hook system with asynchronous capabilities
@@ -71,7 +71,7 @@ Async::Hooks - Hook system with asynchronous capabilities
 
 =head1 VERSION
 
-version 0.06
+version 0.15
 
 =head1 SYNOPSIS
 
