@@ -1,25 +1,27 @@
 package Async::Hooks::Ctl;
+{
+  $Async::Hooks::Ctl::VERSION = '0.06';
+}
+
+# ABSTRACT: Hook control object
 
 use strict;
 use warnings;
 
-our $VERSION = '0.12';
-
-
-# $self is a arrayref with two positions:
+# $self is a arrayref with three positions:
 #   . first  is a arrayref with hooks to call;
 #   . second is a arrayref with the arguments of each hook;
 #   . third is the cleanup sub: always called even when done().
-# 
- 
-sub new  { return bless [ undef, $_[1]||[], $_[2]||[], $_[3] ], $_[0] }
+#
 
-sub args   { return $_[0][2] }
+sub new { return bless [undef, $_[1] || [], $_[2] || [], $_[3]], $_[0] }
+
+sub args { return $_[0][2] }
 
 # stop() or done() stops the chain
 sub done {
   my $ctl = $_[0];
-  
+
   @{$ctl->[1]} = ();
 
   return $ctl->_cleanup(1);
@@ -39,7 +41,7 @@ sub decline {
 }
 
 *declined = \&decline;
-*next = \&declined;
+*next     = \&declined;
 
 
 # _cleanup ends the chain processing
@@ -50,33 +52,34 @@ sub _cleanup {
   return $cleanup->($ctl, $ctl->[2], $is_done || 0);
 }
 
-1; # End of Async::Hooks::Ctl
+1;    # End of Async::Hooks::Ctl
+
+
+__END__
+=pod
 
 =head1 NAME
 
 Async::Hooks::Ctl - Hook control object
 
-
 =head1 VERSION
 
-Version 0.01
-
+version 0.06
 
 =head1 SYNOPSIS
 
     # inside a callback
-    
+
     sub my_callback {
       my $ctl = shift;     # This is the Async::Hooks::Ctl object
       my $args = shift;    # Arguments for the hook
-      
+
       $args = $ctl->args;  # Args are also available with the args() method
-      
+
       return $ctl->done;          # no other callbacks are called
                            # ... or ...
       return $ctl->decline;       # call next callback
     }
-
 
 =head1 DESCRIPTION
 
@@ -147,7 +150,6 @@ A coderef with the cleanup callback to use.
 
 Returns the hook arguments.
 
-
 =item $ctl->decline()
 
 Calls the next callback in the hook sequence.
@@ -155,16 +157,13 @@ Calls the next callback in the hook sequence.
 If there are no callbacks remaining and if a cleanup callback was
 defined, it will be called with the C<$is_done> flag as false.
 
-
 =item $ctl->declined()
 
 An alias to C<< $ctl->decline() >>.
 
-
 =item $ctl->next()
 
 An alias to C<< $ctl->decline() >>.
-
 
 =item $ctl->done()
 
@@ -174,26 +173,23 @@ be called.
 If a cleanup callback was defined, it will be called with the
 C<$is_done> flag as true.
 
-
 =item $ctl->stop()
 
 An alias to C<< $ctl->done() >>.
 
-
 =back
-
 
 =head1 AUTHOR
 
-Pedro Melo, C<< <melo at cpan.org> >>
+Pedro Melo <melo@cpan.org>
 
+=head1 COPYRIGHT AND LICENSE
 
-=head1 COPYRIGHT & LICENSE
+This software is Copyright (c) 2011 by Pedro Melo.
 
-Copyright 2009 Pedro Melo, all rights reserved.
+This is free software, licensed under:
 
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+  The Artistic License 2.0 (GPL Compatible)
 
 =cut
 

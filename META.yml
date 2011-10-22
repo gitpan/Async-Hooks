@@ -4,23 +4,23 @@ author:
   - 'Pedro Melo <melo@cpan.org>'
 build_requires:
   Test::Deep: 0
-  Test::Exception: 0
-  Test::More: 0
-distribution_type: module
-generated_by: 'Module::Install version 0.79'
-license: perl
+  Test::Fatal: 0
+  Test::More: 0.98
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112621'
+license: artistic_2
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Async-Hooks
-no_index:
-  directory:
-    - inc
-    - t
 requires:
-  Mouse: 0
-  perl: 5.8.0
+  Carp: 0
+  Mo: 0.30
+  namespace::clean: 0
 resources:
-  license: http://dev.perl.org/licenses/
-  repository: http://github.com/melo/perl-async-hooks/
-version: 0.05
+  bugtracker: https://github.com/melo/async-hooks/issues
+  homepage: http://search.cpan.org/dist/Async-Hooks/
+  repository: git://github.com/melo/async-hooks.git
+version: 0.06
